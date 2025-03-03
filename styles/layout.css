@@ -1,0 +1,11 @@
+.wrapper {
+  width: var(--max-width);
+  margin: auto;
+}
+/* header region -------------------- */
+.header__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/* header region -------------------- */
