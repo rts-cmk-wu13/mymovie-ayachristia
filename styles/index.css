@@ -61,3 +61,52 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+/* main region -------------------- */
+/* showing  */
+.index__showing {
+  display: flex;
+  flex-direction: column;
+}
+.index__showing-header {
+  display: flex;
+  justify-content: space-between;
+}
+.showmore__btns {
+  background: none;
+  border: 1px solid grey;
+  border-radius: 34px;
+  padding: 0rem 0.7rem;
+}
+.index__showing-list {
+  display: flex;
+  overflow-x: scroll;
+  gap: 1.5rem;
+}
+
+.index__showing-list::-webkit-scrollbar {
+  display: none;
+}
+
+.index__showing-movie {
+  width: 100%;
+}
+.index__showing-imgContainer {
+  width: min(400px, 30vw);
+}
+.index__showing-img {
+  width: 100%;
+  border-radius: 14px;
+}
+
+/* popular  */
+.index__popular-movie {
+  display: flex;
+  margin-bottom: max(1rem, 0.7rem);
+}
+.index__popular-imgContainer {
+  width: min(200px, 20vw);
+}
+.index__popular-img {
+  width: 100%;
+  border-radius: 14px;
+}

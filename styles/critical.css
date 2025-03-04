@@ -10,10 +10,16 @@
   --box-shadow: 0 0 6rem var(--black-tint-100);
   --font-size-regular: clamp(1rem, 1vw, 1.2rem);
   --font-size-big: clamp(1rem, 1vw, 1.3rem);
+  --color-regular: rgb(24, 24, 24);
 }
 
 body {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif, Arial,
     sans-serif;
   font-size: var(--font-size-regular);
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-regular);
 }
