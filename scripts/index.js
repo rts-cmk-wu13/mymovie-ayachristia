@@ -2,7 +2,7 @@
 "use strict";
 let mainContent = document.querySelector(".main");
 
-//movie lists: now playing api-----------horisontal scroll
+//----------- API now playing
 const playingUrl =
   "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1";
 const options = {
@@ -24,35 +24,33 @@ fetch(playingUrl, options)
   })
   .then((movies) => {
     let moviesArray = movies.results;
-    console.log(moviesArray);
     let listContainerShowing = document.querySelector(".index__showing-list");
     listContainerShowing.innerHTML += moviesArray
       .map((movie) => {
         return `
-        <a href="details.html?id=${movie.id}">
+        
         <article class="index__showing-movie">
           <div class="index__showing-imgContainer">
+            <a href="details.html?id=${movie.id}">
             <img src="https://image.tmdb.org/t/p/w500${
               movie.poster_path
             }" alt="${movie.title}" class="index__showing-img">
+            </a>
           </div>
           <h2 class="index__showing-titel">${movie.title}</h2>
           <p class="index__showing-rating"><span class="material-symbols-outlined">star</span> ${movie.vote_average.toFixed(
             1
           )}/10 IMDb</p>
         </article>
-      </a>
+      
         `;
       })
       .join("");
   })
   .catch((err) => console.error(err));
 
-//movie lists: popular api----------------fortsætter ned ad siden/intersectionobserver
-// --------------- genres api
-
+// ---------------API genres
 let genreList = [];
-
 const genreUrl = "https://api.themoviedb.org/3/genre/movie/list?language=en";
 fetch(genreUrl, options)
   .then((res) => res.json())
@@ -63,12 +61,14 @@ fetch(genreUrl, options)
   })
   .catch((err) => console.error(err));
 
-function getGenreNames(ids) {
-  return ids.map((id) => {
-    return genreList.find((genre) => genre.id == id).name;
-  });
-}
-// -------------popular api
+//runtime for DOM// let runtimeContainer = document.querySelector(
+//   ".index__popular-runtime"
+// );
+// runtimeContainer.innerHTML = `
+//   ${movie.runtime}
+// `;
+
+//---------------API popular -fortsætter ned ad siden/intersectionobserver
 const popularUrl =
   "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
 
@@ -82,20 +82,19 @@ fetch(popularUrl, options)
   })
   .then((popular) => {
     let popularArray = popular.results;
-    console.log(popularArray);
-
     let listContainerPopular = document.querySelector(".index__popular-list");
+
     listContainerPopular.innerHTML += popularArray
       .map((popular) => {
-        console.log(popular);
         // -----------------the DOM
         return `
-        <a href="details.html?id=${popular.id}">
-      <article class="index__popular-movie">
+      <article class="index__popular-movie" data-id="${popular.id}">
         <div class="index__popular-imgContainer">
+          <a href="details.html?id=${popular.id}">
           <img src="https://image.tmdb.org/t/p/w500${
             popular.poster_path
           }" alt="${popular.title}" class="index__popular-img">
+          </a>
         </div>
         <section class="index__popular-details">
           <h2 class="index__popular-headline">${popular.title}</h2>
@@ -103,17 +102,41 @@ fetch(popularUrl, options)
             1
           )}/10</p>
           <div class="index__popular-genres">
-            ${getGenreNames(popular.genre_ids)}
-          </div>
-        </section>
-      </article>
-    </a>
+            ${popular.genre_ids.map((id) => {
+              return genreList.find((genre) => genre.id == id).name;
+            })}
+            </div>
+            <p class="index__popular-runtime" id="runtime-${popular.id}">
+            </p>
+          </section>
+        </article>
+      
       `;
       })
       .join(" ");
+    //data-id popular.id added to the object to fetch beneath
+    popularArray.forEach((movie) => {
+      fetch(
+        `https://api.themoviedb.org/3/movie/${movie.id}?language=en-US`,
+        options
+      )
+        .then((res) => res.json())
+        .then((detail) => {
+          console.log(detail);
+          let runtimeElement = document.querySelector(`#runtime-${movie.id}`);
+
+          runtimeElement.innerHTML = `Runtime: ${detail.runtime} mins`;
+        })
+        .catch((err) => console.error(err));
+    });
   })
   .catch((err) => console.error(err));
-
+// function getGenreNames(ids) {
+//   return ids.map((id) => {
+//     return genreList.find((genre) => genre.id == id).name;
+//   });
+// }
+// ${getGenreNames(popular.genre_ids)}
 // -----------------configuration details api
 const configurationUrl = "https://api.themoviedb.org/3/configuration";
 
