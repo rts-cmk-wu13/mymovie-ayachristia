@@ -1,0 +1,17 @@
+.global__genreEl {
+  display: block;
+  background-color: #dbe3ff;
+  color: #88a4e8;
+  padding: 0.3rem 1.8rem;
+  border-radius: 35px;
+  text-transform: uppercase;
+  font-size: var(--font-size-regular);
+}
+
+.showmore__btns {
+  background: none;
+  color: #aaa9b1;
+  border: 1px solid #e5e4ea;
+  border-radius: 34px;
+  padding: 0rem 0.7rem;
+}

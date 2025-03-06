@@ -2,7 +2,7 @@
 "use strict";
 let mainContent = document.querySelector(".main");
 
-//----------- API now playing
+//----------- API fetching now playing
 const playingUrl =
   "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1";
 const options = {
@@ -23,12 +23,14 @@ fetch(playingUrl, options)
     }
   })
   .then((movies) => {
+    //movies in to variabel
     let moviesArray = movies.results;
     let listContainerShowing = document.querySelector(".index__showing-list");
+
+    //mapping out each movie now playing into the DOM
     listContainerShowing.innerHTML += moviesArray
       .map((movie) => {
         return `
-        
         <article class="index__showing-movie">
           <div class="index__showing-imgContainer">
             <a href="details.html?id=${movie.id}">
@@ -49,7 +51,7 @@ fetch(playingUrl, options)
   })
   .catch((err) => console.error(err));
 
-// ---------------API genres
+// ---------------API fetching genres for popular movies genre name beneath
 let genreList = [];
 const genreUrl = "https://api.themoviedb.org/3/genre/movie/list?language=en";
 fetch(genreUrl, options)
@@ -61,14 +63,6 @@ fetch(genreUrl, options)
   })
   .catch((err) => console.error(err));
 
-//runtime for DOM// let runtimeContainer = document.querySelector(
-//   ".index__popular-runtime"
-// );
-// runtimeContainer.innerHTML = `
-//   ${movie.runtime}
-// `;
-
-//---------------API popular -fortsætter ned ad siden/intersectionobserver
 const popularUrl =
   "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
 
@@ -81,12 +75,12 @@ fetch(popularUrl, options)
     }
   })
   .then((popular) => {
+    //popular movies in to variabel
     let popularArray = popular.results;
     let listContainerPopular = document.querySelector(".index__popular-list");
-
+    //mapping out each movie into the DOM
     listContainerPopular.innerHTML += popularArray
       .map((popular) => {
-        // -----------------the DOM
         return `
       <article class="index__popular-movie" data-id="${popular.id}">
         <div class="index__popular-imgContainer">
@@ -102,9 +96,13 @@ fetch(popularUrl, options)
             1
           )}/10</p>
           <div class="index__popular-genres">
-            ${popular.genre_ids.map((id) => {
-              return genreList.find((genre) => genre.id == id).name;
-            })}
+            ${popular.genre_ids
+              .map((id) => {
+                return `<span class="global__genreEl">${
+                  genreList.find((genre) => genre.id == id).name
+                }</span>`;
+              })
+              .join("")}
             </div>
             <p class="index__popular-runtime" id="runtime-${popular.id}">
             </p>
@@ -114,33 +112,30 @@ fetch(popularUrl, options)
       `;
       })
       .join(" ");
-    //data-id popular.id added to the object to fetch beneath
-    popularArray.forEach((movie) => {
+    //inside the popular fetch => forEach popular of popularArray=> fetch all movies through their popular.id
+    //inside forEach popular => fetch all movies => retrieve each popular DOMeL => add movie.runtime
+    //adding runtime
+    popularArray.forEach((popular) => {
       fetch(
-        `https://api.themoviedb.org/3/movie/${movie.id}?language=en-US`,
+        `https://api.themoviedb.org/3/movie/${popular.id}?language=en-US`,
         options
       )
         .then((res) => res.json())
-        .then((detail) => {
-          console.log(detail);
+        .then((movie) => {
+          console.log(movie);
           let runtimeElement = document.querySelector(`#runtime-${movie.id}`);
 
-          runtimeElement.innerHTML = `Runtime: ${detail.runtime} mins`;
+          runtimeElement.innerHTML = `Runtime: ${movie.runtime} mins`;
         })
         .catch((err) => console.error(err));
     });
   })
   .catch((err) => console.error(err));
-// function getGenreNames(ids) {
-//   return ids.map((id) => {
-//     return genreList.find((genre) => genre.id == id).name;
-//   });
-// }
-// ${getGenreNames(popular.genre_ids)}
-// -----------------configuration details api
+
+//guide for image sizing for images above-------------------------------------------------------
 const configurationUrl = "https://api.themoviedb.org/3/configuration";
 
 fetch(configurationUrl, options)
   .then((res) => res.json())
-  .then((json) => {})
+  .then((images) => {})
   .catch((err) => console.error(err));

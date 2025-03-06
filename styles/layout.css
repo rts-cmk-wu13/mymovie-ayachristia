@@ -2,10 +2,11 @@
   width: var(--max-width);
   margin: auto;
 }
+
 /* header region -------------------- */
-.header__top {
+/* header region -------------------- */
+.header__bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-/* header region -------------------- */

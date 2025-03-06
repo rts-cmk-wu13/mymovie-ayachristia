@@ -1,5 +1,5 @@
-let headerLeft = document.querySelector(".header__bottom-left");
-let headerMiddle = document.querySelector(".header__bottom-middle");
+let headerLeft = document.querySelector(".header__left");
+let headerMiddle = document.querySelector(".header__middle");
 headerLeft.innerHTML = `
 <div class="burger__nav">
   <span class="material-symbols-outlined">
@@ -31,7 +31,7 @@ indexMain.innerHTML = `
   <h2>Popular</h2>
   <button class="showmore__btns">See more</button>
   </header>
-  
+
 <section class="index__popular-list">
 </section>
 

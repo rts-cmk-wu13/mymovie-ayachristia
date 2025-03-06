@@ -1,0 +1,78 @@
+/* check previous assignment  */
+.header__details {
+}
+
+.details__main {
+  width: 100%;
+}
+
+/* details banner  */
+.details__banner {
+  width: 100%;
+}
+.details__banner-img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+/* details info  */
+.details__info {
+  background: white;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  margin-top: -17px;
+  border-radius: 1rem 0.5rem 0 0;
+  padding: 2rem 3rem;
+}
+.details__info-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+.details__header-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-big);
+}
+.details__genres {
+  display: flex;
+  gap: 0.5rem;
+}
+/* description  */
+.details__info-resume {
+  margin-top: 2rem;
+}
+.details__description-headline {
+  font-size: var(--font-size-medium);
+  margin-bottom: 1rem;
+}
+.details__description-text {
+  font-size: var(--font-size-regular);
+  color: var(--color-softtext);
+}
+/* cast  */
+.details__cast-header {
+  display: flex;
+  justify-content: space-between;
+}
+/* actor */
+.details__cast-actors {
+  display: flex;
+  overflow-x: scroll;
+  gap: 1.5rem;
+}
+.actorCard {
+  width: 15rem;
+}
+.actorCard__img-container {
+  width: 100%;
+  aspect-ratio: 1/1;
+}
+.actorCard__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}
