@@ -60,11 +60,19 @@
 /* actor */
 .details__cast-actors {
   display: flex;
-  overflow-x: scroll;
+  flex-wrap: wrap;
   gap: 1.5rem;
+
+  overflow: hidden; /*?*/
+  max-height: min(18rem, 18vw);
+  /* transition: max-height 0.3s ease-in-out; */
+}
+.details__cast-actors.expanded {
+  max-height: none;
 }
 .actorCard {
-  width: 15rem;
+  width: min(25rem, 13vw);
+  height: auto;
 }
 .actorCard__img-container {
   width: 100%;

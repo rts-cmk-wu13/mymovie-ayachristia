@@ -53,8 +53,8 @@ fetch(url, options)
       .then((res) => res.json())
       .then((credits) => {
         let cast = credits.cast;
-        let actorsEl = document.querySelector(".details__cast-actors");
-        actorsEl.innerHTML = `
+        let actorsContainer = document.querySelector(".details__cast-actors");
+        actorsContainer.innerHTML = `
         ${cast
           .map((actor) => {
             return `
@@ -78,7 +78,7 @@ fetch(url, options)
     //   ----------------------------------DOM REGION----------------------------------------
     //adding banner backdrop in DOM
     bannerContainer.innerHTML = `
-    <img src="https://image.tmdb.org/t/p/w1280${movie.backdrop_path}" alt="${movie.backdrop_path}" alt="" class="details__banner-img">
+    <img src="https://image.tmdb.org/t/p/w1280${movie.backdrop_path}" alt="${movie.backdrop_path}" alt="${movie.title}" class="details__banner-img">
     `;
 
     //adding info to the DOM
@@ -86,7 +86,9 @@ fetch(url, options)
     
         <section class="details__header-top">
             <h1 class="details__headline">${movie.title}</h1>
-            <span>favorite</span>
+            <span class="material-symbols-outlined">
+bookmark
+</span>
         </section>
         
             <p><span>star</span> ${movie.vote_average.toFixed(1)}</p>
@@ -126,12 +128,25 @@ fetch(url, options)
     <section class="details__cast">
         <header class="details__cast-header">
             <h2 class="details__cast-headline">Cast</h2>
-            <button class="showmore__btns">See more</button>
+            <button class="details__cast-showmore showmore__btns">See more</button>
         </header>
         <section class="details__cast-actors">
         </section>
     </section>
     `;
+
+    let castContainer = document.querySelector(".details__cast-actors");
+    let btnExpandCast = document.querySelector(".details__cast-showmore");
+    btnExpandCast.addEventListener("click", function (event) {
+      console.log("clicked", event.target);
+      castContainer.classList.toggle("expanded");
+
+      if (castContainer.classList.contains("expanded")) {
+        btnExpandCast.textContent = "Show less";
+      } else {
+        btnExpandCast.textContent = "Show more";
+      }
+    });
   })
   .catch((err) => {
     let mainEl = document.querySelector(".main");
