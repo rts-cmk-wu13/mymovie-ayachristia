@@ -25,6 +25,8 @@ fetch(playingUrl, options)
   .then((movies) => {
     //movies in to variabel
     let moviesArray = movies.results;
+    console.log();
+    moviesArray;
     let listContainerShowing = document.querySelector(".index__showing-list");
 
     //mapping out each movie now playing into the DOM
@@ -63,33 +65,40 @@ fetch(genreUrl, options)
   })
   .catch((err) => console.error(err));
 // --------------------------intersecting popular movies---------------------------------------------------------
-const popularOptions = {
+
+let currentPage = 1;
+const observerOptions = {
   threshold: 1.0,
 };
 
-const popularObserver = new IntersectionObserver(function (entries) {});
-// -----------------------------------------------------------------------------------------------------------------
+const observer = new IntersectionObserver(function (entries) {
+  if (entries[0].isIntersecting) {
+    currentPage++;
+    fetchPopularMovie(currentPage);
+  }
+}, observerOptions);
 
 // ---------------API fetching popular movies
-const popularUrl =
-  "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
+function fetchPopularMovie(page) {
+  const popularUrl = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`;
+  fetch(popularUrl, options)
+    .then((res) => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        throw new Error("nothing found");
+      }
+    })
+    .then((popular) => {
+      //popular movies in to variabel
+      let popularArray = popular.results;
 
-fetch(popularUrl, options)
-  .then((res) => {
-    if (res.status === 200) {
-      return res.json();
-    } else {
-      throw new Error("nothing found");
-    }
-  })
-  .then((popular) => {
-    //popular movies in to variabel
-    let popularArray = popular.results;
-    let listContainerPopular = document.querySelector(".index__popular-list");
-    //mapping out each movie into the DOM
-    listContainerPopular.innerHTML += popularArray
-      .map((popular) => {
-        return `
+      console.log(popular);
+      let listContainerPopular = document.querySelector(".index__popular-list");
+      //mapping out each movie into the DOM
+      listContainerPopular.innerHTML += popularArray
+        .map((popular) => {
+          return `
       <article class="index__popular-movie" data-id="${popular.id}">
         <div class="index__popular-imgContainer">
           <a href="details.html?id=${popular.id}">
@@ -118,28 +127,33 @@ fetch(popularUrl, options)
         </article>
       
       `;
-      })
-      .join(" ");
-    //inside the popular fetch => forEach popular of popularArray=> fetch all movies through their popular.id
-    //inside forEach popular => fetch all movies => retrieve each popular DOMeL => add movie.runtime
-    //adding runtime
-    popularArray.forEach((popular) => {
-      fetch(
-        `https://api.themoviedb.org/3/movie/${popular.id}?language=en-US`,
-        options
-      )
-        .then((res) => res.json())
-        .then((movie) => {
-          console.log(movie);
-          let runtimeElement = document.querySelector(`#runtime-${movie.id}`);
-
-          runtimeElement.innerHTML = `Runtime: ${movie.runtime} mins`;
         })
-        .catch((err) => console.error(err));
-    });
-  })
-  .catch((err) => console.error(err));
+        .join(" ");
+      let observedPopular = listContainerPopular.querySelector(
+        "article:nth-last-child(5)"
+      );
+      observer.observe(observedPopular);
+      //inside the popular fetch => forEach popular of popularArray=> fetch all movies through their popular.id
+      //inside forEach popular => fetch all movies => retrieve each popular DOMeL => add movie.runtime
+      //adding runtime
 
+      popularArray.forEach((popular) => {
+        fetch(
+          `https://api.themoviedb.org/3/movie/${popular.id}?language=en-US`,
+          options
+        )
+          .then((res) => res.json())
+          .then((movie) => {
+            let runtimeElement = document.querySelector(`#runtime-${movie.id}`);
+
+            runtimeElement.innerHTML = `Runtime: ${movie.runtime} mins`;
+          })
+          .catch((err) => console.error(err));
+      });
+    })
+    .catch((err) => console.error(err));
+}
+fetchPopularMovie(currentPage);
 //guide for image sizing for images above-------------------------------------------------------
 const configurationUrl = "https://api.themoviedb.org/3/configuration";
 
