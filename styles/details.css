@@ -64,6 +64,7 @@
   gap: 1.5rem;
 
   overflow: hidden; /*?*/
+  /* max-height: 18rem; */
   max-height: min(18rem, 18vw);
   /* transition: max-height 0.3s ease-in-out; */
 }

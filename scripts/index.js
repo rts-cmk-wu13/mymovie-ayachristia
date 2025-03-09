@@ -62,7 +62,15 @@ fetch(genreUrl, options)
     });
   })
   .catch((err) => console.error(err));
+// --------------------------intersecting popular movies---------------------------------------------------------
+const popularOptions = {
+  threshold: 1.0,
+};
 
+const popularObserver = new IntersectionObserver(function (entries) {});
+// -----------------------------------------------------------------------------------------------------------------
+
+// ---------------API fetching popular movies
 const popularUrl =
   "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
 
