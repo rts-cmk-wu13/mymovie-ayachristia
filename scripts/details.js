@@ -34,13 +34,19 @@ fetch(url, options)
     const url = `https://api.themoviedb.org/3/movie/${movie.id}/release_dates`;
     fetch(url, options)
       .then((res) => res.json())
-      .then((release) => {
-        releaseCountries = release.results;
-        originCountry = movie.origin_country[0];
+      .then((data) => {
+        releaseCountries = data.results;
+        originCountry = "US";
+
+        console.log(releaseCountries);
         let releaseForMovieCountry = releaseCountries.find(
-          (releaseInfo) => releaseInfo.iso_3166_1 === originCountry
+          (releaseInfo) => releaseInfo.iso_3166_1 == originCountry
         ).release_dates[0].certification;
         console.log(releaseForMovieCountry);
+        // let releaseForMovieCountry = releaseCountries.find(
+        //   (releaseInfo) => releaseInfo.iso_3166_1 == originCountry
+        // ).release_dates[0].certification;
+        // console.log(releaseForMovieCountry);
 
         let moviePG = document.querySelector(".details__PG");
         moviePG.textContent = `${releaseForMovieCountry}`;
@@ -112,7 +118,9 @@ bookmark
                         <th>Rating</th>
                     </tr>
                     <tr>
-                        <td>${movie.runtime}</td>
+                        <td>${Math.floor(movie.runtime / 60)}h. ${
+      movie.runtime % 60
+    }min.</td>
                         <td>${movie.spoken_languages[0].english_name}</td>
                         <td class="details__PG"></td>
                     </tr>

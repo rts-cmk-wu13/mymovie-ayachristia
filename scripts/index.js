@@ -73,6 +73,7 @@ function nowPlayingPage(page) {
 nowPlayingPage(currentPage);
 // ---------------API fetching genres for popular movies genre name beneath
 let genreList = [];
+
 const genreUrl = "https://api.themoviedb.org/3/genre/movie/list?language=en";
 fetch(genreUrl, options)
   .then((res) => res.json())

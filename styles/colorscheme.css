@@ -1,0 +1,21 @@
+/* data atributter til at aktivere dark/light on boolean values  */
+[data-dark="true"] {
+  color-scheme: dark;
+}
+
+[data-dark="false"] {
+  color-scheme: light;
+}
+
+/* valg af farver på landmarks på dak/light color scheme  */
+html,
+input,
+textarea {
+  color: light-dark(var(--dark-color), var(--light-color));
+  background-color: light-dark(var(--light-color), var(--dark-color));
+}
+
+input,
+textarea {
+  border: 1px solid light-dark(var(--dark-color), var(--light-color));
+}
