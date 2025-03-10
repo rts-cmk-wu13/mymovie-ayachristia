@@ -1,10 +1,20 @@
 // lav fetches først og append dom inde i de fetches til de fecthes kategorier
 "use strict";
 let mainContent = document.querySelector(".main");
+// --------------------------intersecting now playing ---------------------------------------------------------
+let currentPage = 1; //deklareret én gang til nowplaying+popular intersection observers
+const nowPlayingOptions = {
+  threshold: 1.0,
+};
+const nowPlayingObserver = new IntersectionObserver(function (entries) {
+  if (entries[0].isIntersecting) {
+    currentPage++;
+    nowPlayingPage(currentPage);
+  }
+}, nowPlayingOptions);
 
 //----------- API fetching now playing
-const playingUrl =
-  "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1";
+
 const options = {
   method: "GET",
   headers: {
@@ -13,26 +23,28 @@ const options = {
       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZmIyZDVhZDZjMTBkZGYwZjk0N2Q2NWFlNWRlODljYyIsIm5iZiI6MTc0MTAwMjQ2OS4wMTksInN1YiI6IjY3YzU5NmU1YzdjYWJhNDI0YzkxZmU0MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.syFixX53XmNC4Ivc4Eci2Wma89qYRuCZKKQdrBDhCpQ",
   },
 };
+function nowPlayingPage(page) {
+  const playingUrl = `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${page}`;
+  fetch(playingUrl, options)
+    .then((res) => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        throw new Error("nothing found");
+      }
+    })
+    .then((movies) => {
+      console.log(movies);
+      //movies in to variabel
+      let moviesArray = movies.results;
+      console.log();
+      moviesArray;
+      let listContainerShowing = document.querySelector(".index__showing-list");
 
-fetch(playingUrl, options)
-  .then((res) => {
-    if (res.status === 200) {
-      return res.json();
-    } else {
-      throw new Error("nothing found");
-    }
-  })
-  .then((movies) => {
-    //movies in to variabel
-    let moviesArray = movies.results;
-    console.log();
-    moviesArray;
-    let listContainerShowing = document.querySelector(".index__showing-list");
-
-    //mapping out each movie now playing into the DOM
-    listContainerShowing.innerHTML += moviesArray
-      .map((movie) => {
-        return `
+      //mapping out each movie now playing into the DOM
+      listContainerShowing.innerHTML += moviesArray
+        .map((movie) => {
+          return `
         <article class="index__showing-movie">
           <div class="index__showing-imgContainer">
             <a href="details.html?id=${movie.id}">
@@ -48,11 +60,17 @@ fetch(playingUrl, options)
         </article>
       
         `;
-      })
-      .join("");
-  })
-  .catch((err) => console.error(err));
+        })
+        .join("");
 
+      let observedNowPlaying = listContainerShowing.querySelector(
+        "article:nth-last-child(5)"
+      );
+      nowPlayingObserver.observe(observedNowPlaying);
+    })
+    .catch((err) => console.error(err));
+}
+nowPlayingPage(currentPage);
 // ---------------API fetching genres for popular movies genre name beneath
 let genreList = [];
 const genreUrl = "https://api.themoviedb.org/3/genre/movie/list?language=en";
@@ -66,7 +84,6 @@ fetch(genreUrl, options)
   .catch((err) => console.error(err));
 // --------------------------intersecting popular movies---------------------------------------------------------
 
-let currentPage = 1;
 const popularOptions = {
   threshold: 1.0,
 };
