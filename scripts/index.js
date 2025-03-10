@@ -67,16 +67,16 @@ fetch(genreUrl, options)
 // --------------------------intersecting popular movies---------------------------------------------------------
 
 let currentPage = 1;
-const observerOptions = {
+const popularOptions = {
   threshold: 1.0,
 };
 
-const observer = new IntersectionObserver(function (entries) {
+const popularObserver = new IntersectionObserver(function (entries) {
   if (entries[0].isIntersecting) {
     currentPage++;
     fetchPopularMovie(currentPage);
   }
-}, observerOptions);
+}, popularOptions);
 
 // ---------------API fetching popular movies
 function fetchPopularMovie(page) {
@@ -132,7 +132,7 @@ function fetchPopularMovie(page) {
       let observedPopular = listContainerPopular.querySelector(
         "article:nth-last-child(5)"
       );
-      observer.observe(observedPopular);
+      popularObserver.observe(observedPopular);
       //inside the popular fetch => forEach popular of popularArray=> fetch all movies through their popular.id
       //inside forEach popular => fetch all movies => retrieve each popular DOMeL => add movie.runtime
       //adding runtime
