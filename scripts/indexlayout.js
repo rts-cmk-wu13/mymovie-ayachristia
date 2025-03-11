@@ -1,5 +1,6 @@
 let headerLeft = document.querySelector(".header__left");
 let headerMiddle = document.querySelector(".header__middle");
+
 headerLeft.innerHTML = `
 <div class="burger__nav">
   <span class="material-symbols-outlined">

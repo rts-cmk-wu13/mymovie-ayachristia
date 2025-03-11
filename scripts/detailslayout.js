@@ -1,11 +1,13 @@
 // header
 let headerLeft = document.querySelector(".header__left");
+
 headerLeft.innerHTML = `
 <span class="material-symbols-outlined">
 keyboard_backspace
 </span>
 `;
 
+//main
 let main = document.querySelector(".main");
 let detailsMain = document.createElement("div");
 detailsMain.classList.add("details__main");

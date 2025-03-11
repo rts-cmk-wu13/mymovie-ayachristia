@@ -177,5 +177,7 @@ const configurationUrl = "https://api.themoviedb.org/3/configuration";
 
 fetch(configurationUrl, options)
   .then((res) => res.json())
-  .then((images) => {})
+  .then((images) => {
+    console.log(images);
+  })
   .catch((err) => console.error(err));

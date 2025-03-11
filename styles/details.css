@@ -1,6 +1,4 @@
 /* check previous assignment  */
-.header__details {
-}
 
 .details__main {
   width: 100%;
@@ -18,7 +16,7 @@
 
 /* details info  */
 .details__info {
-  background: white;
+  /* background: white; */
   width: 100%;
   position: relative;
   z-index: 10;

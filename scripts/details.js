@@ -1,7 +1,7 @@
 let params = new URLSearchParams(window.location.search);
 let movieId = params.get("id");
 
-const movieUrl = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&append_to_response=release_dates,credits,configuration`;
+const movieUrl = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&append_to_response=release_dates,credits`;
 const options = {
   method: "GET",
   headers: {
@@ -10,7 +10,6 @@ const options = {
       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZmIyZDVhZDZjMTBkZGYwZjk0N2Q2NWFlNWRlODljYyIsIm5iZiI6MTc0MTAwMjQ2OS4wMTksInN1YiI6IjY3YzU5NmU1YzdjYWJhNDI0YzkxZmU0MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.syFixX53XmNC4Ivc4Eci2Wma89qYRuCZKKQdrBDhCpQ",
   },
 };
-
 // ---------------API fetching movie detail
 fetch(movieUrl, options)
   .then((res) => {
@@ -29,11 +28,14 @@ fetch(movieUrl, options)
 
     // -----------------------------Rating / release_dates / Age----------------------------
     let countryChosen = "US";
+
     function movieRating(countryChosen) {
       // let ratingEl = document.querySelector(".details__PG");
       const country = movie.release_dates.results.find(
         (country) => country.iso_3166_1 === countryChosen
       );
+      console.log(country);
+
       let rating = "N/A";
       if (country) {
         country.release_dates.forEach((release) => {
@@ -46,6 +48,7 @@ fetch(movieUrl, options)
       }
       return rating;
     }
+
     // -----------------------------Credits / Cast ----------------------------
     let castArray = movie.credits.cast;
     function getCast(cast) {

@@ -4,8 +4,12 @@
 }
 
 /* header region -------------------- */
-/* header region -------------------- */
-.header__bottom {
+.header {
+  position: fixed;
+  top: 0;
+  width: var(--max-width);
+  margin: auto;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
