@@ -22,7 +22,7 @@
   z-index: 10;
   margin-top: -17px;
   border-radius: 1rem 0.5rem 0 0;
-  padding: 2rem 3rem;
+  padding: 2rem 1rem;
 }
 .details__info-header {
   display: flex;

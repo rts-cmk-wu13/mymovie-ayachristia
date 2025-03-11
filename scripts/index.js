@@ -118,6 +118,7 @@ function fetchPopularMovie(page) {
         .map((popular) => {
           return `
       <article class="index__popular-movie" data-id="${popular.id}">
+        
         <div class="index__popular-imgContainer">
           <a href="details.html?id=${popular.id}">
           <img src="https://image.tmdb.org/t/p/w500${
@@ -125,6 +126,7 @@ function fetchPopularMovie(page) {
           }" alt="${popular.title}" class="index__popular-img">
           </a>
         </div>
+
         <section class="index__popular-details">
           <h2 class="index__popular-headline">${popular.title}</h2>
           <p class="index__popular-rating"><span class="material-symbols-outlined">star</span> ${popular.vote_average.toFixed(

@@ -36,17 +36,23 @@
 /* popular  */
 .index__popular-movie {
   display: flex;
+  width: 100%;
   margin-bottom: max(1rem, 0.7rem);
 }
 .index__popular-imgContainer {
-  width: min(200px, 20vw);
+  /* min-width: min(200px, 20vw); */
+  width: 25%;
 }
 .index__popular-img {
   width: 100%;
   border-radius: 14px;
 }
+.index__popular-details {
+  width: 75%;
+}
 .index__popular-genres {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
   margin: 0rem 0.5rem;
 }
