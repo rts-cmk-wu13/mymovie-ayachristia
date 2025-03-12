@@ -21,12 +21,12 @@ fetch(movieUrl, options)
   })
   .then((movie) => {
     console.log(movie);
-    // -------------------------ELEMENTS REGION---------------------------------------------
+    // ELEMENTS REGION---------------------------------------------
     let bannerContainer = document.querySelector(".details__banner-container");
     let detailsHeader = document.querySelector(".details__info-header");
     let detailsResume = document.querySelector(".details__info-resume");
 
-    // -----------------------------Rating / release_dates / Age----------------------------
+    //Rating / release_dates / Age---------------------------------
     let countryChosen = "US";
 
     function movieRating(countryChosen) {
@@ -49,7 +49,7 @@ fetch(movieUrl, options)
       return rating;
     }
 
-    // -----------------------------Credits / Cast ----------------------------
+    // Credits / Cast --------------------------------------------
     let castArray = movie.credits.cast;
     function getCast(cast) {
       castList = cast
@@ -70,8 +70,7 @@ fetch(movieUrl, options)
         .join("");
       return castList;
     }
-    //   ----------------------------------DOM REGION----------------------------------------
-    //   ----------------------------------DOM REGION----------------------------------------
+    //   DOM REGION-----------------------------------------------
 
     //banner backdrop in DOM
     bannerContainer.innerHTML = `
@@ -79,14 +78,16 @@ fetch(movieUrl, options)
     `;
     //DOM HEADER
     detailsHeader.innerHTML = `
-        <section class="details__header-top">
-            <h1 class="details__headline">${movie.title}</h1>
+        <section class="details__info-headerTop">
+            <h1 class="details__info-headline">${movie.title}</h1>
             <span class="material-symbols-outlined">
             bookmark
         </span>
         </section>
-        <p><span>star</span> ${movie.vote_average.toFixed(1)}</p>
-        <section class="details__genres">
+        <p class="details__movie-rating"><span class="material-symbols-outlined global__star">star</span> ${movie.vote_average.toFixed(
+          1
+        )} IMDb</p>
+        <section class="details__info-genres">
                 ${movie.genres
                   .map((genre) => {
                     return `
@@ -95,7 +96,7 @@ fetch(movieUrl, options)
                   })
                   .join("")}
         </section>
-        <section class="details__header-bottom">
+        <section class="details__info-headerBottom">
                   <table>
                     <tr>
                         <th>Length</th>
@@ -107,7 +108,7 @@ fetch(movieUrl, options)
       movie.runtime % 60
     }min.</td>
                         <td>${movie.spoken_languages[0].english_name}</td>
-                        <td class="details__PG">${movieRating(
+                        <td class="details__info-PG">${movieRating(
                           countryChosen
                         )}</td>
                     </tr>

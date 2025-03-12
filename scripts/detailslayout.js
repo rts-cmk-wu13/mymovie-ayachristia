@@ -1,10 +1,12 @@
 // header
 let headerLeft = document.querySelector(".header__left");
+headerLeft.classList.add("details__returnToMain");
 
 headerLeft.innerHTML = `
-<span class="material-symbols-outlined">
+<a href="index.html"><span class="material-symbols-outlined">
 keyboard_backspace
-</span>
+</span></a>
+
 `;
 
 //main

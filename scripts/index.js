@@ -54,7 +54,7 @@ function nowPlayingPage(page) {
             </a>
           </div>
           <h2 class="index__showing-titel">${movie.title}</h2>
-          <p class="index__showing-rating"><span class="material-symbols-outlined">star</span> ${movie.vote_average.toFixed(
+          <p class="index__showing-rating"><span class="material-symbols-outlined global__star">star</span> ${movie.vote_average.toFixed(
             1
           )}/10 IMDb</p>
         </article>
@@ -116,6 +116,7 @@ function fetchPopularMovie(page) {
       //mapping out each movie into the DOM
       listContainerPopular.innerHTML += popularArray
         .map((popular) => {
+          console.log(popular.runtime);
           return `
       <article class="index__popular-movie" data-id="${popular.id}">
         
@@ -128,10 +129,10 @@ function fetchPopularMovie(page) {
         </div>
 
         <section class="index__popular-details">
-          <h2 class="index__popular-headline">${popular.title}</h2>
-          <p class="index__popular-rating"><span class="material-symbols-outlined">star</span> ${popular.vote_average.toFixed(
+          <h2 class="index__popular-titel">${popular.title}</h2>
+          <p class="index__popular-rating"><span class="material-symbols-outlined global__star">star</span> ${popular.vote_average.toFixed(
             1
-          )}/10</p>
+          )}/10 IMDb</p>
           <div class="index__popular-genres">
             ${popular.genre_ids
               .map((id) => {
@@ -156,7 +157,6 @@ function fetchPopularMovie(page) {
       //inside the popular fetch => forEach popular of popularArray=> fetch all movies through their popular.id
       //inside forEach popular => fetch all movies => retrieve each popular DOMeL => add movie.runtime
       //adding runtime
-
       popularArray.forEach((popular) => {
         fetch(
           `https://api.themoviedb.org/3/movie/${popular.id}?language=en-US`,
@@ -166,7 +166,11 @@ function fetchPopularMovie(page) {
           .then((movie) => {
             let runtimeElement = document.querySelector(`#runtime-${movie.id}`);
 
-            runtimeElement.innerHTML = `Runtime: ${movie.runtime} mins`;
+            runtimeElement.innerHTML = `<span class="material-symbols-outlined">
+            schedule
+            </span> ${Math.floor(movie.runtime / 60)}h. ${
+              movie.runtime % 60
+            }min.`;
           })
           .catch((err) => console.error(err));
       });

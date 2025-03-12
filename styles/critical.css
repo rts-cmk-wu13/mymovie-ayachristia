@@ -10,13 +10,14 @@
 }
 
 :root {
-  --max-width: 75vw;
+  /* --max-width: 90vw; */
   --black-tint-100: rgba(0, 0, 0, 0.1);
   --box-shadow: 0 0 6rem var(--black-tint-100);
-  --font-size-regular: clamp(0.7rem, 2vw, 1.4rem);
-  --font-size-medium: clamp(1.8rem, 1vw, 1.4rem);
+  --font-size-regular: clamp(0.8rem, 2vw, 1.4rem);
+  --font-size-medium: clamp(1rem, 1vw, 2rem);
+  --font-size-medium-description: clamp(1.2rem, 1vw, 2.2rem);
   --font-size-big: clamp(2.1rem, 1vw, 3.7rem);
-  --color-softtext: #9c9c9c;
+  --color-grey-soft: #aaa9b1;
 
   color-scheme: light dark;
   --color-regular: rgb(24, 24, 24);

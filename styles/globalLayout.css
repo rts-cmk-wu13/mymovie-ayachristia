@@ -1,16 +1,17 @@
 .wrapper {
-  width: var(--max-width);
-  margin: auto;
+  position: relative;
+  /* width: var(--max-width); */
+  padding-top: 1.8rem;
 }
 
 /* header region -------------------- */
 .header {
-  position: fixed;
-  top: 0;
-  width: var(--max-width);
+  position: relative;
+  z-index: 2;
   margin: auto;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0 2rem 1rem 0;
 }

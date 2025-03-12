@@ -1,3 +1,6 @@
+let marginLeftWrapper = document.querySelector(".wrapper");
+marginLeftWrapper.classList.add("indexMarginLeft");
+
 let headerLeft = document.querySelector(".header__left");
 let headerMiddle = document.querySelector(".header__middle");
 
