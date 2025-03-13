@@ -8,10 +8,20 @@
   align-items: center;
   width: 100%;
 }
+.favorite__movie-left {
+  display: flex;
+  align-items: center;
+  width: 90%;
+}
+.favorite__movie-right {
+  display: flex;
+  flex-direction: column;
+  width: 10%;
+}
 
 .favorite__movie-imgContainer {
-  width: 40%;
-  height: min(400px, 16vw);
+  width: 34%;
+  height: min(410px, 16vw);
 }
 .favorite__movie-img {
   width: 100%;
@@ -20,28 +30,34 @@
 }
 
 .favorite__movie-title {
-  width: 40%;
+  width: 46%;
   padding: 0 0 0 2rem;
-  font-size: var(--font-size-regular);
+  font-size: var(--font-size-small);
 }
 .favorite__movie-detailsBtn {
-  width: 15%;
-  border: none;
-  background: none;
-}
-.favorite__movie-removeBtn {
-  width: 15%;
+  width: 20%;
+  text-align: end;
   border: none;
   background: none;
 }
 .favorite__movie-detailsBtn span {
+  font-size: 39px;
+}
+.favorite__movie-btn {
+  border: none;
+  background: none;
+  width: 100%;
+  padding-left: 0.5rem;
+}
+.favorite__movie-btn span {
   font-size: 35px;
 }
-.favorite__movie-removeBtn span {
-  font-size: 40px;
-}
-.favorite__movie-removeBtn span:nth-child(1) {
-}
-.favorite__movie-removeBtn span:nth-child(2) {
+.favorite__movie-btn:nth-child(2) span {
+  font-size: 25px;
   display: none;
+}
+
+/* Show delete button when class is added */
+.show-delete-btn {
+  display: block !important;
 }

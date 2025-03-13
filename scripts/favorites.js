@@ -23,27 +23,49 @@ favorites.forEach((movieId) => {
     })
     .then((movie) => {
       favoritesMain.innerHTML += `
-      <a href="details.html?id=${movie.id}">
+      
 
-      <article class="favorite__movie">
+      <article class="favorite__movie" id="movie-${movie.id}">
+
+      <a href="details.html?id=${movie.id}" class="favorite__movie-left">
       <div class="favorite__movie-imgContainer">
       <img src="https://image.tmdb.org/t/p/w780${movie.backdrop_path}" alt="${movie.original_title}" class="favorite__movie-img">
       </div>
+
       <h1 class="favorite__movie-title">${movie.original_title}</h1>
+
       <button class="favorite__movie-detailsBtn">
       <span class="material-symbols-outlined">play_circle</span>
       </button>
-      <button class="favorite__movie-removeBtn">
-      <span class="material-symbols-outlined">
-      remove</span>
-      <span class="material-symbols-outlined">
+      </a>
+
+      <div class="favorite__movie-right">
+      <button class="favorite__movie-btn">
+      <span class="material-symbols-outlined favorite__minus${movie.id}" id="minus-${movie.id}">
+      remove
+      </span>
+      </button>
+      
+
+      <button class="favorite__movie-btn">
+      <span class="material-symbols-outlined favorite__delete${movie.id}" id="delete-${movie.id}">
       delete
       </span>
       </button>
-      </article>
+      </div>
 
-      </a>
+      </article>
+      
+
+      
       `;
+      //   document.addEventListener("click", function (event) {
+      //     if (event.target.classList.contains(`favorite__minus${movie.id}`)) {
+      //       let minusBtn = document.querySelector(`#minus-${movie.id}`);
+      //       let deleteBtn = document.querySelector(`#delete-${movie.id}`);
+      //       deleteBtn.style.display = "block";
+      //     }
+      //   });
     })
     .catch((err) => {
       let mainEl = document.querySelector(".main");
@@ -54,7 +76,38 @@ favorites.forEach((movieId) => {
 });
 
 document.addEventListener("click", function (event) {
-  if (event.target.classList.contains("favorite__movie-removeBtn")) {
-    console.log("button clicked");
+  // Check if we clicked on any minus or delete button
+  if (
+    event.target.id &&
+    (event.target.id.startsWith("minus-") ||
+      event.target.id.startsWith("delete-"))
+  ) {
+    const movieId = event.target.id.split("-")[1];
+    let minusBtn = document.querySelector(`#minus-${movieId}`);
+    let deleteBtn = document.querySelector(`#delete-${movieId}`);
+
+    deleteBtn.classList.toggle("show-delete-btn");
+  }
+
+  if (event.target.id.startsWith("delete-")) {
+    const movieId = event.target.id.split("-")[1];
+    console.log("clicked delete");
+
+    const deleteMovie = document.querySelector(`#movie-${movieId}`);
+    console.log(deleteMovie);
+    if (deleteMovie) {
+      removeItemFromLocalStorage("favorites", movieId);
+      deleteMovie.remove();
+    }
   }
 });
+//  const deleteBtnStyle = window.getComputedStyle(deleteBtn);
+
+//     // Toggle visibility of both buttons
+//     if (deleteBtnStyle.display === "none") {
+//       minusBtn.style.display = "block";
+//       deleteBtn.style.display = "block";
+//     } else {
+//       minusBtn.style.display = "block";
+//       deleteBtn.style.display = "none";
+//     }
