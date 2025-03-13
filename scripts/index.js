@@ -57,6 +57,9 @@ function nowPlayingPage(page) {
           <p class="index__showing-rating"><span class="material-symbols-outlined global__star">star</span> ${movie.vote_average.toFixed(
             1
           )}/10 IMDb</p>
+          <span class="material-symbols-outlined" id="favorite">
+            bookmark
+        </span>
         </article>
       
         `;
@@ -145,6 +148,9 @@ function fetchPopularMovie(page) {
             <p class="index__popular-runtime" id="runtime-${popular.id}">
             </p>
           </section>
+          <span class="material-symbols-outlined" id="favorite">
+            bookmark
+        </span>
         </article>
       
       `;

@@ -1,9 +1,7 @@
 //root element
 let rootEl = document.documentElement;
-console.log(rootEl);
 //switch element from input
 let switchEl = document.querySelector("#switch");
-console.log(switchEl);
 //readfrom local storage what colorscheme is chosen
 let isDarkMode = readfromlocalstorage("isDarkMode");
 let browserDark = window.matchMedia("(prefers-color-scheme: dark)").matches;

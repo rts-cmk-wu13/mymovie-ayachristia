@@ -1,16 +1,8 @@
 let marginLeftWrapper = document.querySelector(".wrapper");
 marginLeftWrapper.classList.add("indexMarginLeft");
 
-let headerLeft = document.querySelector(".header__left");
 let headerMiddle = document.querySelector(".header__middle");
 
-headerLeft.innerHTML = `
-<div class="burger__nav">
-  <span class="material-symbols-outlined">
-menu
-</span>
-  </div>
-`;
 headerMiddle.innerHTML = `
 <h1>MyMovies</h1>
 `;

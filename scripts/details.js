@@ -1,7 +1,7 @@
 let params = new URLSearchParams(window.location.search);
 let movieId = params.get("id");
 
-const movieUrl = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&append_to_response=release_dates,credits`;
+const movieUrl = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&append_to_response=release_dates,credits,videos`;
 const options = {
   method: "GET",
   headers: {
@@ -20,7 +20,6 @@ fetch(movieUrl, options)
     }
   })
   .then((movie) => {
-    console.log(movie);
     // ELEMENTS REGION---------------------------------------------
     let bannerContainer = document.querySelector(".details__banner-container");
     let detailsHeader = document.querySelector(".details__info-header");
@@ -56,14 +55,14 @@ fetch(movieUrl, options)
         .map((actor) => {
           return `
             <section class="details__cast-actor">
-                <div class="actorCard">
-                    <div class="actorCard__img-container">
-                        <a href="#">
-                        <img src="https://image.tmdb.org/t/p/w154${actor.profile_path}" alt="" class="actorCard__img">
-                        </a>
-                    </div>
-                    <p class="actorCard__name">${actor.character}</p>
+              <div class="actorCard">
+                <div class="actorCard__img-container">
+                  <a href="#">
+                    <img src="https://image.tmdb.org/t/p/w154${actor.profile_path}" alt="" class="actorCard__img">
+                  </a>
                 </div>
+                <p class="actorCard__name">${actor.character}</p>
+              </div>
             </section>
             `;
         })
@@ -76,11 +75,48 @@ fetch(movieUrl, options)
     bannerContainer.innerHTML = `
     <img src="https://image.tmdb.org/t/p/w1280${movie.backdrop_path}" alt="${movie.backdrop_path}" alt="${movie.title}" class="details__banner-img">
     `;
+    //trailer creation---------------------------------------------
+    let trailer = movie.videos.results.filter((result) => {
+      if (result.type.includes("Trailer") && result.site.includes("YouTube")) {
+        return result;
+      }
+    });
+
+    const trailerKey = trailer[0]?.key;
+
+    //track if trailer has been loaded
+    let hasTrailerLoaded = false;
+
+    bannerContainer.addEventListener("mouseenter", function () {
+      if (trailerKey && !hasTrailerLoaded) {
+        hasTrailerLoaded = true;
+
+        bannerContainer.innerHTML = `
+      <iframe id="trailer" class="details__banner-trailer" frameborder="0" allowfullscreen></iframe>
+      `;
+
+        const iframe = document.querySelector("#trailer");
+        iframe.src = `https://www.youtube.com/embed/${trailerKey}?autoplay=1&mute=1`;
+      } else if (!trailerKey) {
+        console.log("No trailer found");
+        bannerContainer.innerHTML = `
+    <img src="https://image.tmdb.org/t/p/w1280${movie.backdrop_path}" alt="${movie.backdrop_path}" alt="${movie.title}" class="details__banner-img">
+    `;
+      }
+    });
+
+    bannerContainer.addEventListener("mouseout", function (event) {
+      bannerContainer.innerHTML = `
+    <img src="https://image.tmdb.org/t/p/w1280${movie.backdrop_path}" alt="${movie.backdrop_path}" alt="${movie.title}" class="details__banner-img">
+    `;
+
+      hasTrailerLoaded = false;
+    });
     //DOM HEADER
     detailsHeader.innerHTML = `
         <section class="details__info-headerTop">
             <h1 class="details__info-headline">${movie.title}</h1>
-            <span class="material-symbols-outlined">
+            <span class="material-symbols-outlined" id="favorite">
             bookmark
         </span>
         </section>

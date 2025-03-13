@@ -41,3 +41,40 @@
 .global__star {
   color: #ffc319;
 }
+/* burgerBtn  */
+.burger__nav-btn {
+  border: none;
+  background: none;
+}
+.burger__nav-list {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 5px;
+  width: 80%;
+  height: 100vh;
+  border-right: 1px solid rgba(209, 207, 207, 0.471);
+  background-color: white;
+}
+
+.active {
+  display: flex;
+}
+
+.burger__nav-list a {
+  background-color: rgba(201, 201, 201, 0.35);
+  padding: 0.6rem 1rem;
+  margin: 0 0.7rem 0.7rem 0;
+}
+
+.burger__nav-close {
+  position: absolute;
+  top: 0;
+  right: -24px;
+  border: none;
+  background-color: rgb(201, 201, 201);
+  font-weight: bold;
+  font-size: 20px;
+  color: white;
+  padding: 0 0.3rem;
+}
