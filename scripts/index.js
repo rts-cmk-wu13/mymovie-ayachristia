@@ -35,6 +35,7 @@ function nowPlayingPage(page) {
     })
     .then((movies) => {
       console.log(movies);
+
       //movies in to variabel
       let moviesArray = movies.results;
       console.log();
@@ -57,7 +58,9 @@ function nowPlayingPage(page) {
           <p class="index__showing-rating"><span class="material-symbols-outlined global__star">star</span> ${movie.vote_average.toFixed(
             1
           )}/10 IMDb</p>
-          <span class="material-symbols-outlined" id="favorite">
+          <span class="material-symbols-outlined favorite" id="favorite" data-id="${
+            movie.id
+          }">
             bookmark
         </span>
         </article>
@@ -113,13 +116,10 @@ function fetchPopularMovie(page) {
     .then((popular) => {
       //popular movies in to variabel
       let popularArray = popular.results;
-
-      console.log(popular);
       let listContainerPopular = document.querySelector(".index__popular-list");
       //mapping out each movie into the DOM
       listContainerPopular.innerHTML += popularArray
         .map((popular) => {
-          console.log(popular.runtime);
           return `
       <article class="index__popular-movie" data-id="${popular.id}">
         
@@ -148,7 +148,9 @@ function fetchPopularMovie(page) {
             <p class="index__popular-runtime" id="runtime-${popular.id}">
             </p>
           </section>
-          <span class="material-symbols-outlined" id="favorite">
+          <span class="material-symbols-outlined favorite" id="favorite" data-id="${
+            popular.id
+          }" name="${popular.title}">
             bookmark
         </span>
         </article>
@@ -193,3 +195,25 @@ fetch(configurationUrl, options)
     console.log(images);
   })
   .catch((err) => console.error(err));
+
+// --------------------------gathering favorites on index.html
+const favoriteArray = readfromlocalstorage("favorites") || [];
+
+//delegering - 1 event listener istedet på alle (hvis mange elementer med samme event)
+//lytter på en parent og fanger alle elementer + nye elementer / ved click på et element, tjekkesom det er det valgte via if(contains)
+document.addEventListener("click", function (event) {
+  if (event.target.classList.contains("favorite")) {
+    let favoriteId = event.target.dataset.id;
+    console.log(event.target);
+
+    //hvis favoriteArray ikke allerede holder id'et, så push ind i Array, ellers gør intet.
+    if (!favoriteArray.includes(favoriteId)) {
+      favoriteArray.push(favoriteId);
+      console.log(`adds to favorites: ${favoriteId}`);
+    } else {
+      console.log(`already in favorites: ${favoriteId}`);
+    }
+    console.log(favoriteArray);
+    saveToLocalStorage("favorites", favoriteArray);
+  }
+});

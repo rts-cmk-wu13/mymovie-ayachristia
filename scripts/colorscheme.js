@@ -29,9 +29,9 @@ if (darkState) {
 switchEl.addEventListener("change", function () {
   if (switchEl.checked) {
     rootEl.setAttribute("data-dark", switchEl.checked);
-    saveToLocageStorage("isDarkMode", switchEl.checked);
+    saveToLocalStorage("isDarkMode", switchEl.checked);
   } else {
     rootEl.setAttribute("data-dark", switchEl.checked);
-    saveToLocageStorage("isDarkMode", switchEl.checked);
+    saveToLocalStorage("isDarkMode", switchEl.checked);
   }
 });

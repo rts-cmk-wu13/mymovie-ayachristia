@@ -116,7 +116,9 @@ fetch(movieUrl, options)
     detailsHeader.innerHTML = `
         <section class="details__info-headerTop">
             <h1 class="details__info-headline">${movie.title}</h1>
-            <span class="material-symbols-outlined" id="favorite">
+            <span class="material-symbols-outlined favorite" id="favorite" data-id="${
+              movie.id
+            }" name="${movie.original_title}">
             bookmark
         </span>
         </section>
