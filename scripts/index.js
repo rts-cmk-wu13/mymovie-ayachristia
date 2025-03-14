@@ -87,6 +87,7 @@ const popularObserver = new IntersectionObserver(function (entries) {
 }, popularOptions);
 ////////////////////////////API FETCH POPULAR GENRES FOR POPULAR MOVIES
 let genreList = [];
+let genresLoaded = false;
 
 const genreUrl = "https://api.themoviedb.org/3/genre/movie/list?language=en";
 fetch(genreUrl, options)
@@ -95,6 +96,9 @@ fetch(genreUrl, options)
     data.genres.forEach((genre) => {
       genreList.push(genre);
     });
+    genresLoaded = true;
+
+    fetchPopularMovie(currentPage);
   })
   .catch((err) => console.error(err));
 
@@ -188,7 +192,7 @@ function fetchPopularMovie(page) {
     })
     .catch((err) => console.error(err));
 }
-fetchPopularMovie(currentPage);
+// fetchPopularMovie(currentPage);
 //guide for image sizing for images above-------------------------------------------------------
 const configurationUrl = "https://api.themoviedb.org/3/configuration";
 
