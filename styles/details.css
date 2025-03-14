@@ -73,31 +73,28 @@
 .details__cast-header {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 1rem;
 }
 
 /* actors */
+
 .details__cast-actors {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  row-gap: 2rem;
+  column-gap: 0.8rem;
   justify-content: space-between;
 
   overflow: hidden; /*?*/
   /* max-height: 18rem; */
-  max-height: min(14rem, 25vw);
+  max-height: min(16rem, 29vw);
   /* transition: max-height 0.3s ease-in-out; */
 }
-/* @media screen and (max-width: 700px) {
-  .details__cast-actors {
-    justify-content: space-between;
-  }
-} */
-
 .details__cast-actors.expanded {
   max-height: none;
 }
 .actorCard {
-  width: min(12rem, 22vw);
+  width: min(12rem, 20vw);
   height: auto;
 }
 .actorCard__img-container {
@@ -109,4 +106,17 @@
   height: 100%;
   object-fit: cover;
   border-radius: 15px;
+}
+
+/* footer */
+.detailsFooter {
+  text-align: center;
+  height: 30px;
+}
+.details__footer {
+  text-align: center;
+  width: 30%;
+  height: 6px;
+  background: var(--color-regular);
+  border-radius: 150rem 150rem;
 }

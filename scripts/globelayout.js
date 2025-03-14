@@ -15,6 +15,6 @@ root.innerHTML = `
 
     <main class="main"></main>
 
-    <footer></footer>
 </div>
+<footer class="footer"></footer>
 `;

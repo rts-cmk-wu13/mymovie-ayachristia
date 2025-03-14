@@ -84,3 +84,23 @@
   align-items: center;
   gap: 0.2rem;
 }
+
+/* footer  */
+.hybridFooter {
+  display: grid;
+  min-height: 75px;
+  grid-template-columns: repeat(3, 1fr);
+  box-shadow: 0 -1px 12px -8px rgba(89, 81, 35, 0.478);
+}
+.footer-left,
+.footer-middle,
+.footer-right {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+.footer-left a,
+.footer-middle a,
+.footer-right a {
+  color: var(--color-grey-soft);
+}
