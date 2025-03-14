@@ -25,21 +25,21 @@ favorites.forEach((movieId) => {
       favoritesMain.innerHTML += `
       
 
-      <article class="favorite__movie" id="movie-${movie.id}">
+      <article class="favorite__movie" id="movie-${movie.id}" aria-labelledby="favoriteMovie">
 
-      <a href="details.html?id=${movie.id}" class="favorite__movie-left">
+      <a href="details.html?id=${movie.id}" class="favorite__movie-left" aria-label="movieCover">
       <div class="favorite__movie-imgContainer">
       <img src="https://image.tmdb.org/t/p/w780${movie.backdrop_path}" alt="${movie.original_title}" class="favorite__movie-img">
       </div>
 
-      <h1 class="favorite__movie-title">${movie.original_title}</h1>
+      <h1 class="favorite__movie-title" id="favoriteMovie" aria-label="movieTitle">${movie.original_title}</h1>
 
-      <button class="favorite__movie-detailsBtn">
+      <button class="favorite__movie-detailsBtn" aria-label="goToMovieDetails">
       <span class="material-symbols-outlined">play_circle</span>
       </button>
       </a>
 
-      <div class="favorite__movie-right">
+      <div class="favorite__movie-right" aria-label="removeFromFavorites">
       <button class="favorite__movie-btn">
       <span class="material-symbols-outlined favorite__minus${movie.id}" id="minus-${movie.id}">
       remove
