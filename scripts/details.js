@@ -187,3 +187,26 @@ fetch(movieUrl, options)
     <h2>${err}</h2>
     <p>Go back to <span><a href="index.html">main</a></span></p>`;
   });
+
+// ---------------------------
+// collect favorites
+const favoriteArray = readfromlocalstorage("favorites") || [];
+
+//delegering - 1 event listener istedet på alle (hvis mange elementer med samme event)
+//lytter på en parent og fanger alle elementer + nye elementer / ved click på et element, tjekkesom det er det valgte via if(contains)
+document.addEventListener("click", function (event) {
+  if (event.target.classList.contains("favorite")) {
+    let favoriteId = event.target.dataset.id;
+    console.log(event.target);
+
+    //hvis favoriteArray ikke allerede holder id'et, så push ind i Array, ellers gør intet.
+    if (!favoriteArray.includes(favoriteId)) {
+      favoriteArray.push(favoriteId);
+      console.log(`adds to favorites: ${favoriteId}`);
+    } else {
+      console.log(`already in favorites: ${favoriteId}`);
+    }
+    console.log(favoriteArray);
+    saveToLocalStorage("favorites", favoriteArray);
+  }
+});

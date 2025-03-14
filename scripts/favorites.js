@@ -59,13 +59,6 @@ favorites.forEach((movieId) => {
 
       
       `;
-      //   document.addEventListener("click", function (event) {
-      //     if (event.target.classList.contains(`favorite__minus${movie.id}`)) {
-      //       let minusBtn = document.querySelector(`#minus-${movie.id}`);
-      //       let deleteBtn = document.querySelector(`#delete-${movie.id}`);
-      //       deleteBtn.style.display = "block";
-      //     }
-      //   });
     })
     .catch((err) => {
       let mainEl = document.querySelector(".main");
@@ -101,13 +94,3 @@ document.addEventListener("click", function (event) {
     }
   }
 });
-//  const deleteBtnStyle = window.getComputedStyle(deleteBtn);
-
-//     // Toggle visibility of both buttons
-//     if (deleteBtnStyle.display === "none") {
-//       minusBtn.style.display = "block";
-//       deleteBtn.style.display = "block";
-//     } else {
-//       minusBtn.style.display = "block";
-//       deleteBtn.style.display = "none";
-//     }
