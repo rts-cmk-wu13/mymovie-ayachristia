@@ -10,7 +10,7 @@ const options = {
       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZmIyZDVhZDZjMTBkZGYwZjk0N2Q2NWFlNWRlODljYyIsIm5iZiI6MTc0MTAwMjQ2OS4wMTksInN1YiI6IjY3YzU5NmU1YzdjYWJhNDI0YzkxZmU0MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.syFixX53XmNC4Ivc4Eci2Wma89qYRuCZKKQdrBDhCpQ",
   },
 };
-// ---------------API fetching movie detail
+////////////////////////////API FETCH MOVIE DETAILS
 fetch(movieUrl, options)
   .then((res) => {
     if (res.status === 200) {
@@ -20,12 +20,11 @@ fetch(movieUrl, options)
     }
   })
   .then((movie) => {
-    // ELEMENTS REGION---------------------------------------------
     let bannerContainer = document.querySelector(".details__banner-container");
     let detailsHeader = document.querySelector(".details__info-header");
     let detailsResume = document.querySelector(".details__info-resume");
 
-    //Rating / release_dates / Age---------------------------------
+    ////////////////////////////AGE, RELEASE DATES
     let countryChosen = "US";
 
     function movieRating(countryChosen) {
@@ -48,20 +47,20 @@ fetch(movieUrl, options)
       return rating;
     }
 
-    // Credits / Cast --------------------------------------------
+    ////////////////////////////CAST, CREDITS
     let castArray = movie.credits.cast;
     function getCast(cast) {
       castList = cast
         .map((actor) => {
           return `
-            <section class="details__cast-actor">
+            <section class="details__cast-actor" aria-labelledBy="actor">
               <div class="actorCard">
                 <div class="actorCard__img-container">
                   <a href="#">
-                    <img src="https://image.tmdb.org/t/p/w154${actor.profile_path}" alt="" class="actorCard__img">
+                    <img src="https://image.tmdb.org/t/p/w154${actor.profile_path}" alt="${actor.name}" class="actorCard__img">
                   </a>
                 </div>
-                <p class="actorCard__name">${actor.character}</p>
+                <p class="actorCard__name" id="actor">${actor.name}</p>
               </div>
             </section>
             `;
@@ -69,13 +68,14 @@ fetch(movieUrl, options)
         .join("");
       return castList;
     }
-    //   DOM REGION-----------------------------------------------
+    ////////////////////////////DOM REGION
 
-    //banner backdrop in DOM
+    ////////////////////////////BANNER/TRAILER (skulle måske have været i function)
+    // (banne imageburde sættes i en function så den kunne kaldes flere gange nedenfor)
     bannerContainer.innerHTML = `
-    <img src="https://image.tmdb.org/t/p/w1280${movie.backdrop_path}" alt="${movie.backdrop_path}" alt="${movie.title}" class="details__banner-img">
+    <img src="https://image.tmdb.org/t/p/w1280${movie.backdrop_path}" alt="${movie.backdrop_path}" alt="${movie.title}" class="details__banner-img" aria-labelledby="coverToTrailer">
     `;
-    //trailer creation---------------------------------------------
+    ////////////////////////////TRAILER CREATION
     let trailer = movie.videos.results.filter((result) => {
       if (result.type.includes("Trailer") && result.site.includes("YouTube")) {
         return result;
@@ -92,7 +92,7 @@ fetch(movieUrl, options)
         hasTrailerLoaded = true;
 
         bannerContainer.innerHTML = `
-      <iframe id="trailer" class="details__banner-trailer" frameborder="0" allowfullscreen></iframe>
+      <iframe id="trailer" class="details__banner-trailer" frameborder="0" allowfullscreen id="coverToTrailer"></iframe>
       `;
 
         const iframe = document.querySelector("#trailer");
@@ -100,32 +100,36 @@ fetch(movieUrl, options)
       } else if (!trailerKey) {
         console.log("No trailer found");
         bannerContainer.innerHTML = `
-    <img src="https://image.tmdb.org/t/p/w1280${movie.backdrop_path}" alt="${movie.backdrop_path}" alt="${movie.title}" class="details__banner-img">
+    <img src="https://image.tmdb.org/t/p/w1280${movie.backdrop_path}" alt="${movie.backdrop_path}" alt="${movie.title}" class="details__banner-img" aria-labelledby="coverToTrailer">
     `;
       }
     });
 
     bannerContainer.addEventListener("mouseout", function (event) {
       bannerContainer.innerHTML = `
-    <img src="https://image.tmdb.org/t/p/w1280${movie.backdrop_path}" alt="${movie.backdrop_path}" alt="${movie.title}" class="details__banner-img">
+    <img src="https://image.tmdb.org/t/p/w1280${movie.backdrop_path}" alt="${movie.backdrop_path}" alt="${movie.title}" class="details__banner-img" aria-labelledby="coverToTrailer">
     `;
 
       hasTrailerLoaded = false;
     });
-    //DOM HEADER
+    ////////////////////////////BANNER/TRAILER REGION END
+
+    ////////////////////////////DOM REGION - HEADER
     detailsHeader.innerHTML = `
         <section class="details__info-headerTop">
-            <h1 class="details__info-headline">${movie.title}</h1>
+            <h1 class="details__info-headline" id="overskrift">${
+              movie.title
+            }</h1>
             <span class="material-symbols-outlined favorite" id="favorite" data-id="${
               movie.id
-            }" name="${movie.original_title}">
+            }" name="${movie.original_title}" aria-label="saveToFavorites">
             bookmark
         </span>
         </section>
-        <p class="details__movie-rating"><span class="material-symbols-outlined global__star">star</span> ${movie.vote_average.toFixed(
+        <p class="details__movie-rating" aria-label="movieRatings"><span class="material-symbols-outlined global__star">star</span> ${movie.vote_average.toFixed(
           1
         )} IMDb</p>
-        <section class="details__info-genres">
+        <section class="details__info-genres" aria-label="movieGenres">
                 ${movie.genres
                   .map((genre) => {
                     return `
@@ -142,29 +146,35 @@ fetch(movieUrl, options)
                         <th>Rating</th>
                     </tr>
                     <tr>
-                        <td>${Math.floor(movie.runtime / 60)}h. ${
-      movie.runtime % 60
-    }min.</td>
-                        <td>${movie.spoken_languages[0].english_name}</td>
-                        <td class="details__info-PG">${movieRating(
+                        <td aria-label="movieRuntime">${Math.floor(
+                          movie.runtime / 60
+                        )}h. ${movie.runtime % 60}min.</td>
+                        <td aria-label="movieLanguage">${
+                          movie.spoken_languages[0].english_name
+                        }</td>
+                        <td class="details__info-PG" aria-label="ageRestrictions">${movieRating(
                           countryChosen
                         )}</td>
                     </tr>
                   </table>
         </section>
     `;
-    //DOM DESCRIPTION + CAST
+    ////////////////////////////DOM REGION - DESCRIPTION + CAST
     detailsResume.innerHTML = `
-    <section class="details__description">
+    <section class="details__description" aria-label="movieDescription">
         <h1 class="details__description-headline">Description</h1>
-        <p class="details__description-text">${movie.overview}</p>
+        <p class="details__description-text" aria-describedby="overskrift">${
+          movie.overview
+        }</p>
     </section>
-    <section class="details__cast">
-        <header class="details__cast-header">
-            <h2 class="details__cast-headline">Cast</h2>
-            <button class="details__cast-showmore showmore__btns">See more</button>
+    <section class="details__cast" aria-label="movieCast">
+        <header class="details__cast-header" role="header">
+            <h2 class="details__cast-headline" id="castList">Cast</h2>
+            <button class="details__cast-showmore showmore__btns" aria-label="castButton" aria-controles="castView">See more</button>
         </header>
-        <section class="details__cast-actors">${getCast(castArray)}
+        <section class="details__cast-actors" aria-describedby="castList" id="castView" aria-expanded="false">${getCast(
+          castArray
+        )}
         </section>
     </section>
     `;
@@ -175,9 +185,11 @@ fetch(movieUrl, options)
     btnExpandCastList.addEventListener("click", function () {
       castContainer.classList.toggle("expanded");
       if (castContainer.classList.contains("expanded")) {
-        btnExpandCast.textContent = "Show less";
+        btnExpandCastList.textContent = "Show less";
+        btnExpandCastList.setAttribute("aria-expanded", true);
       } else {
-        btnExpandCast.textContent = "Show more";
+        btnExpandCastList.textContent = "Show more";
+        btnExpandCastList.setAttribute("aria-expanded", false);
       }
     });
   })

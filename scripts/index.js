@@ -1,7 +1,7 @@
 // lav fetches først og append dom inde i de fetches til de fecthes kategorier
 "use strict";
 let mainContent = document.querySelector(".main");
-// --------------------------intersecting now playing ---------------------------------------------------------
+////////////////////////////intersecting now playing
 let currentPage = 1; //deklareret én gang til nowplaying+popular intersection observers
 const nowPlayingOptions = {
   threshold: 1.0,
@@ -13,7 +13,7 @@ const nowPlayingObserver = new IntersectionObserver(function (entries) {
   }
 }, nowPlayingOptions);
 
-//////////////////////////API fetching now playing
+//////////////////////////API FETCH NOW PLAYING
 
 const options = {
   method: "GET",
@@ -37,7 +37,7 @@ function nowPlayingPage(page) {
       let moviesArray = movies.results;
       let listContainerShowing = document.querySelector(".index__showing-list");
 
-      //MAP OUT EACH MOVIE TO DOM
+      ////////////////////////////DOM REGION
       listContainerShowing.innerHTML += moviesArray
         .map((movie) => {
           return `
@@ -72,19 +72,8 @@ function nowPlayingPage(page) {
     .catch((err) => console.error(err));
 }
 nowPlayingPage(currentPage);
-// ---------------API fetching genres for popular movies genre name beneath
-let genreList = [];
 
-const genreUrl = "https://api.themoviedb.org/3/genre/movie/list?language=en";
-fetch(genreUrl, options)
-  .then((res) => res.json())
-  .then((data) => {
-    data.genres.forEach((genre) => {
-      genreList.push(genre);
-    });
-  })
-  .catch((err) => console.error(err));
-// --------------------------intersecting popular movies---------------------------------------------------------
+////////////////////////////INTERSECTING POPULAR MOVIES
 
 const popularOptions = {
   threshold: 1.0,
@@ -96,8 +85,20 @@ const popularObserver = new IntersectionObserver(function (entries) {
     fetchPopularMovie(currentPage);
   }
 }, popularOptions);
+////////////////////////////API FETCH POPULAR GENRES FOR POPULAR MOVIES
+let genreList = [];
 
-// ---------------API fetching popular movies
+const genreUrl = "https://api.themoviedb.org/3/genre/movie/list?language=en";
+fetch(genreUrl, options)
+  .then((res) => res.json())
+  .then((data) => {
+    data.genres.forEach((genre) => {
+      genreList.push(genre);
+    });
+  })
+  .catch((err) => console.error(err));
+
+////////////////////////////API FETCH POPULAR MOVIES
 function fetchPopularMovie(page) {
   const popularUrl = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`;
   fetch(popularUrl, options)
@@ -112,7 +113,8 @@ function fetchPopularMovie(page) {
       //popular movies in to variabel
       let popularArray = popular.results;
       let listContainerPopular = document.querySelector(".index__popular-list");
-      //mapping out each movie into the DOM
+
+      ////////////////////////////DOM REGION
       listContainerPopular.innerHTML += popularArray
         .map((popular) => {
           return `
