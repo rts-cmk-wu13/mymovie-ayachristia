@@ -207,14 +207,17 @@ const favoriteArray = readfromlocalstorage("favorites") || [];
 document.addEventListener("click", function (event) {
   if (event.target.classList.contains("favorite")) {
     let favoriteId = event.target.dataset.id;
-    console.log(event.target);
+
+    event.target.classList.toggle("favorite-solid");
 
     //hvis favoriteArray ikke allerede holder id'et, så push ind i Array, ellers gør intet.
     if (!favoriteArray.includes(favoriteId)) {
       favoriteArray.push(favoriteId);
       console.log(`adds to favorites: ${favoriteId}`);
     } else {
-      console.log(`already in favorites: ${favoriteId}`);
+      const index = favoriteArray.indexOf(favoriteId);
+      favoriteArray.splice(index, 1);
+      console.log(`removed from favorite array`);
     }
     console.log(favoriteArray);
     saveToLocalStorage("favorites", favoriteArray);

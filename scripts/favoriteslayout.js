@@ -11,7 +11,3 @@ let main = document.querySelector(".main");
 let favoritesMain = document.createElement("div");
 favoritesMain.classList.add("favorites__main");
 main.appendChild(favoritesMain);
-
-favoritesMain.innerHTML = `
-
-`;

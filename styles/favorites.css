@@ -61,3 +61,6 @@
 .show-delete-btn {
   display: block !important;
 }
+.favorite-solid {
+  font-variation-settings: "FILL" 1;
+}
