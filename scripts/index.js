@@ -13,7 +13,7 @@ const nowPlayingObserver = new IntersectionObserver(function (entries) {
   }
 }, nowPlayingOptions);
 
-//----------- API fetching now playing
+//////////////////////////API fetching now playing
 
 const options = {
   method: "GET",
@@ -34,19 +34,14 @@ function nowPlayingPage(page) {
       }
     })
     .then((movies) => {
-      console.log(movies);
-
-      //movies in to variabel
       let moviesArray = movies.results;
-      console.log();
-      moviesArray;
       let listContainerShowing = document.querySelector(".index__showing-list");
 
-      //mapping out each movie now playing into the DOM
+      //MAP OUT EACH MOVIE TO DOM
       listContainerShowing.innerHTML += moviesArray
         .map((movie) => {
           return `
-        <article class="index__showing-movie">
+          <article class="index__showing-movie" aria-labelledby="movieShowing">
           <div class="index__showing-imgContainer">
             <a href="details.html?id=${movie.id}">
             <img src="https://image.tmdb.org/t/p/w500${
@@ -54,13 +49,13 @@ function nowPlayingPage(page) {
             }" alt="${movie.title}" class="index__showing-img">
             </a>
           </div>
-          <h2 class="index__showing-titel">${movie.title}</h2>
-          <p class="index__showing-rating"><span class="material-symbols-outlined global__star">star</span> ${movie.vote_average.toFixed(
+          <h2 class="index__showing-titel" id="movieShowing">${movie.title}</h2>
+          <p class="index__showing-rating"><span class="material-symbols-outlined global__star" aria-label="movieReviews">star</span> ${movie.vote_average.toFixed(
             1
           )}/10 IMDb</p>
           <span class="material-symbols-outlined favorite" id="favorite" data-id="${
             movie.id
-          }">
+          }" aria-label="addTofavorite">
             bookmark
         </span>
         </article>
@@ -121,7 +116,9 @@ function fetchPopularMovie(page) {
       listContainerPopular.innerHTML += popularArray
         .map((popular) => {
           return `
-      <article class="index__popular-movie" data-id="${popular.id}">
+      <article class="index__popular-movie" data-id="${
+        popular.id
+      }" aria-labelledby="popularMovie">
         
         <div class="index__popular-imgContainer">
           <a href="details.html?id=${popular.id}">
@@ -132,11 +129,13 @@ function fetchPopularMovie(page) {
         </div>
 
         <section class="index__popular-details">
-          <h2 class="index__popular-titel">${popular.title}</h2>
-          <p class="index__popular-rating"><span class="material-symbols-outlined global__star">star</span> ${popular.vote_average.toFixed(
+          <h2 class="index__popular-titel" id="popularMovie">${
+            popular.title
+          }</h2>
+          <p class="index__popular-rating"><span class="material-symbols-outlined global__star" aria-label="movieReviews">star</span> ${popular.vote_average.toFixed(
             1
           )}/10 IMDb</p>
-          <div class="index__popular-genres">
+          <div class="index__popular-genres" aria-label="movieGenres">
             ${popular.genre_ids
               .map((id) => {
                 return `<span class="global__genreEl">${
@@ -145,12 +144,14 @@ function fetchPopularMovie(page) {
               })
               .join("")}
             </div>
-            <p class="index__popular-runtime" id="runtime-${popular.id}">
+            <p class="index__popular-runtime" id="runtime-${
+              popular.id
+            }" aria-label="movieRuntime">
             </p>
           </section>
           <span class="material-symbols-outlined favorite" id="favorite" data-id="${
             popular.id
-          }" name="${popular.title}">
+          }" name="${popular.title}" aria-label="saveToFavorites">
             bookmark
         </span>
         </article>
