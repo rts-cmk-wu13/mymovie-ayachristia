@@ -1,0 +1,35 @@
+@font-face {
+  font-family: "Mulish";
+  src: url(Mulish-VariableFont_wght.ttf);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* --max-width: 90vw; */
+  --black-tint-100: rgba(0, 0, 0, 0.1);
+  --box-shadow: 0 0 6rem var(--black-tint-100);
+  --font-size-regular: clamp(0.8rem, 2vw, 1.4rem);
+  --font-size-medium: clamp(1rem, 1vw, 2rem);
+  --font-size-medium-description: clamp(1.2rem, 1vw, 2.2rem);
+  --font-size-big: clamp(2.1rem, 1vw, 3.7rem);
+  --color-grey-soft: #aaa9b1;
+
+  color-scheme: light dark;
+  --color-regular: rgb(24, 24, 24);
+  --light-color: hsl(0 0% 97%);
+}
+
+body {
+  font-family: "Mulish";
+  font-size: var(--font-size-regular);
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-regular);
+}

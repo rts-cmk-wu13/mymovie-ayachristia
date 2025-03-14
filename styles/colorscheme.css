@@ -1,0 +1,76 @@
+/* switch btn for dark mode  */
+.switch {
+  position: relative;
+  display: inline-block;
+  height: 22px;
+  width: 40px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+/* slider:background  span*/
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #aaa9b1;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+/* slider:dot  pseudo element before/infront  */
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 19px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+input:checked + .slider {
+  background-color: white;
+}
+input:focus + .slider {
+  box-shadow: 0 0 1px white;
+}
+input:checked + .slider::before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(16px);
+  background-color: black;
+}
+.slider.round {
+  border-radius: 36px;
+}
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* data atributter til at aktivere dark/light on boolean values  */
+[data-dark="true"] {
+  color-scheme: dark;
+}
+
+[data-dark="false"] {
+  color-scheme: light;
+}
+
+/* valg af farver på landmarks på dak/light color scheme  */
+html,
+input,
+textarea {
+  color: light-dark(var(--color-regular), var(--light-color));
+  background-color: light-dark(var(--light-color), var(--dark-color));
+}
+
+input,
+textarea {
+  border: 1px solid light-dark(var(--dark-color), var(--light-color));
+}

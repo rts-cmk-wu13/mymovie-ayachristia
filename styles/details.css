@@ -1,0 +1,122 @@
+/* check previous assignment  */
+
+.details__main {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.details__returnToMain a {
+  color: white;
+  margin-left: 2rem;
+}
+
+/* details banner  */
+.details__banner {
+  width: 100%;
+}
+.details__banner-img,
+.details__banner-trailer {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+/* details info  */
+.details__info {
+  background-color: white;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  margin-top: -17px;
+  border-radius: 0.5rem 0.5rem 0 0;
+  padding: 2rem 1rem;
+}
+.details__info-headline {
+  font-size: var(--font-size-big);
+}
+.details__info-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.details__info-headerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.details__info-headerBottom th {
+  text-align: left;
+  padding-right: 4rem;
+}
+.details__info-headerBottom td {
+  text-align: left;
+}
+.details__info-genres {
+  display: flex;
+  gap: 0.5rem;
+}
+/* description  */
+.details__info-resume {
+  margin-top: 2rem;
+}
+.details__description-headline {
+  font-size: var(--font-size-medium-description);
+  margin-bottom: 0.5rem;
+}
+.details__description-text {
+  color: var(--color-grey-soft);
+  margin-bottom: 1.5rem;
+}
+/* cast  */
+.details__cast-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+/* actors */
+
+.details__cast-actors {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 2rem;
+  column-gap: 0.8rem;
+  justify-content: space-between;
+
+  overflow: hidden; /*?*/
+  /* max-height: 18rem; */
+  max-height: min(16rem, 29vw);
+  /* transition: max-height 0.3s ease-in-out; */
+}
+.details__cast-actors.expanded {
+  max-height: none;
+}
+.actorCard {
+  width: min(12rem, 20vw);
+  height: auto;
+}
+.actorCard__img-container {
+  width: 100%;
+  aspect-ratio: 1/1;
+}
+.actorCard__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+/* footer */
+.detailsFooter {
+  text-align: center;
+  height: 30px;
+}
+.details__footer {
+  text-align: center;
+  width: 30%;
+  height: 6px;
+  background: var(--color-regular);
+  border-radius: 150rem 150rem;
+}

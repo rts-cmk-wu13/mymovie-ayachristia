@@ -1,0 +1,24 @@
+.wrapper {
+  position: relative;
+  /* width: var(--max-width); */
+  padding-top: 1.8rem;
+}
+
+/* header region -------------------- */
+.header {
+  position: relative;
+  z-index: 2;
+  margin: auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 2rem 1rem 0;
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 5vh;
+  background-color: white;
+}
