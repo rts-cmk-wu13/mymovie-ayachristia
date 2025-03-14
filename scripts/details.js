@@ -1,5 +1,7 @@
 let params = new URLSearchParams(window.location.search);
 let movieId = params.get("id");
+// collect favorites
+const favoriteArray = readfromlocalstorage("favorites") || [];
 
 const movieUrl = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&append_to_response=release_dates,credits,videos`;
 const options = {
@@ -178,6 +180,29 @@ fetch(movieUrl, options)
         </section>
     </section>
     `;
+    //delegering - 1 event listener istedet på alle (hvis mange elementer med samme event)
+    //lytter på en parent og fanger alle elementer + nye elementer / ved click på et element, tjekkesom det er det valgte via if(contains)
+    document.addEventListener("click", function (event) {
+      if (event.target.classList.contains("favorite")) {
+        let favoriteId = event.target.dataset.id;
+        console.log(event.target);
+
+        event.target.classList.toggle("favorite-solid");
+
+        //hvis favoriteArray ikke allerede holder id'et, så push ind i Array, ellers gør intet.
+        if (!favoriteArray.includes(favoriteId)) {
+          favoriteArray.push(favoriteId);
+          console.log(`adds to favorites: ${favoriteId}`);
+        } else {
+          const index = favoriteArray.indexOf(favoriteId);
+          favoriteArray.splice(index, 1);
+          console.log(`removed from favorite array`);
+        }
+        console.log(favoriteArray);
+        saveToLocalStorage("favorites", favoriteArray);
+      }
+    });
+
     //DOM CAST EXPAND LIST EVENT
     let castContainer = document.querySelector(".details__cast-actors");
     let btnExpandCastList = document.querySelector(".details__cast-showmore");
@@ -201,24 +226,3 @@ fetch(movieUrl, options)
   });
 
 // ---------------------------
-// collect favorites
-const favoriteArray = readfromlocalstorage("favorites") || [];
-
-//delegering - 1 event listener istedet på alle (hvis mange elementer med samme event)
-//lytter på en parent og fanger alle elementer + nye elementer / ved click på et element, tjekkesom det er det valgte via if(contains)
-document.addEventListener("click", function (event) {
-  if (event.target.classList.contains("favorite")) {
-    let favoriteId = event.target.dataset.id;
-    console.log(event.target);
-
-    //hvis favoriteArray ikke allerede holder id'et, så push ind i Array, ellers gør intet.
-    if (!favoriteArray.includes(favoriteId)) {
-      favoriteArray.push(favoriteId);
-      console.log(`adds to favorites: ${favoriteId}`);
-    } else {
-      console.log(`already in favorites: ${favoriteId}`);
-    }
-    console.log(favoriteArray);
-    saveToLocalStorage("favorites", favoriteArray);
-  }
-});
