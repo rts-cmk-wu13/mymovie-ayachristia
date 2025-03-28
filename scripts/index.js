@@ -1,5 +1,7 @@
 // lav fetches først og append dom inde i de fetches til de fecthes kategorier
 "use strict";
+const favoriteArray = readfromlocalstorage("favorites") || [];
+console.log(favoriteArray);
 let mainContent = document.querySelector(".main");
 ////////////////////////////intersecting now playing
 let currentPage = 1; //deklareret én gang til nowplaying+popular intersection observers
@@ -53,9 +55,9 @@ function nowPlayingPage(page) {
           <p class="index__showing-rating"><span class="material-symbols-outlined global__star" aria-label="movieReviews">star</span> ${movie.vote_average.toFixed(
             1
           )}/10 IMDb</p>
-          <span class="material-symbols-outlined favorite" id="favorite" data-id="${
-            movie.id
-          }" aria-label="addTofavorite">
+          <span class="material-symbols-outlined favorite ${
+            favoriteArray.includes(movie.id.toString()) ? "favorite-solid" : ""
+          }" id="favorite" data-id="${movie.id}" aria-label="addTofavorite">
             bookmark
         </span>
         </article>
@@ -155,9 +157,13 @@ function fetchPopularMovie(page) {
             }" aria-label="movieRuntime">
             </p>
           </section>
-          <span class="material-symbols-outlined favorite" id="favorite" data-id="${
-            popular.id
-          }" name="${popular.title}" aria-label="saveToFavorites">
+          <span class="material-symbols-outlined favorite ${
+            favoriteArray.includes(popular.id.toString())
+              ? "favorite-solid"
+              : ""
+          }" id="favorite" data-id="${popular.id}" name="${
+            popular.title
+          }" aria-label="saveToFavorites">
             bookmark
         </span>
         </article>
@@ -204,7 +210,6 @@ fetch(configurationUrl, options)
   .catch((err) => console.error(err));
 
 // --------------------------gathering favorites on index.html
-const favoriteArray = readfromlocalstorage("favorites") || [];
 
 //delegering - 1 event listener istedet på alle (hvis mange elementer med samme event)
 //lytter på en parent og fanger alle elementer + nye elementer / ved click på et element, tjekkesom det er det valgte via if(contains)
@@ -212,18 +217,31 @@ document.addEventListener("click", function (event) {
   if (event.target.classList.contains("favorite")) {
     let favoriteId = event.target.dataset.id;
 
-    event.target.classList.toggle("favorite-solid");
-
     //hvis favoriteArray ikke allerede holder id'et, så push ind i Array, ellers gør intet.
     if (!favoriteArray.includes(favoriteId)) {
       favoriteArray.push(favoriteId);
+      event.target.classList.add("favorite-solid");
+
       console.log(`adds to favorites: ${favoriteId}`);
+      console.log(favoriteArray);
     } else {
       const index = favoriteArray.indexOf(favoriteId);
       favoriteArray.splice(index, 1);
+      event.target.classList.remove("favorite-solid");
       console.log(`removed from favorite array`);
+      console.log(favoriteArray);
     }
-    console.log(favoriteArray);
     saveToLocalStorage("favorites", favoriteArray);
   }
 });
+
+console.log(favoriteArray);
+
+// let array = [1, 2, 3, 4];
+// let newArray = [...array];
+// console.log(newArray);
+// let a = [10, 20];
+// let b = [...a, 30, 40];
+
+// console.log(a);
+// console.log(b);
