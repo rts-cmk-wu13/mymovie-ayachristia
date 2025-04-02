@@ -2,6 +2,7 @@ let params = new URLSearchParams(window.location.search);
 let movieId = params.get("id");
 // collect favorites
 const favoriteArray = readfromlocalstorage("favorites") || [];
+console.log(favoriteArray);
 
 const movieUrl = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&append_to_response=release_dates,credits,videos`;
 const options = {
@@ -115,16 +116,19 @@ fetch(movieUrl, options)
       hasTrailerLoaded = false;
     });
     ////////////////////////////BANNER/TRAILER REGION END
-
     ////////////////////////////DOM REGION - HEADER
     detailsHeader.innerHTML = `
         <section class="details__info-headerTop">
             <h1 class="details__info-headline" id="overskrift">${
               movie.title
             }</h1>
-            <span class="material-symbols-outlined favorite" id="favorite" data-id="${
-              movie.id
-            }" name="${movie.original_title}" aria-label="saveToFavorites">
+            <span class="material-symbols-outlined favorite ${
+              favoriteArray.includes(movie.id.toString())
+                ? "favorite-solid"
+                : ""
+            }" id="favorite" data-id="${movie.id}" name="${
+      movie.original_title
+    }" aria-label="saveToFavorites">
             bookmark
         </span>
         </section>
@@ -185,20 +189,18 @@ fetch(movieUrl, options)
     document.addEventListener("click", function (event) {
       if (event.target.classList.contains("favorite")) {
         let favoriteId = event.target.dataset.id;
-        console.log(event.target);
-
-        event.target.classList.toggle("favorite-solid");
 
         //hvis favoriteArray ikke allerede holder id'et, så push ind i Array, ellers gør intet.
         if (!favoriteArray.includes(favoriteId)) {
           favoriteArray.push(favoriteId);
-          console.log(`adds to favorites: ${favoriteId}`);
+          event.target.classList.add("favorite-solid");
+          console.log(favoriteArray);
         } else {
           const index = favoriteArray.indexOf(favoriteId);
           favoriteArray.splice(index, 1);
-          console.log(`removed from favorite array`);
+          event.target.classList.remove("favorite-solid");
+          console.log(favoriteArray);
         }
-        console.log(favoriteArray);
         saveToLocalStorage("favorites", favoriteArray);
       }
     });
