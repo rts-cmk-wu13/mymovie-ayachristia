@@ -60,6 +60,7 @@ function nowPlayingPage(page) {
           }" id="favorite" data-id="${movie.id}" aria-label="addTofavorite">
             bookmark
         </span>
+        
         </article>
       
         `;
