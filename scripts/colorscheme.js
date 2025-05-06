@@ -6,15 +6,18 @@ let switchEl = document.querySelector("#switch");
 let isDarkMode = readfromlocalstorage("isDarkMode");
 let browserDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
+
+let darkState = isDarkMode === null ? false : isDarkMode;
+
 //base state for darktheme
-let darkState = null;
+// let darkState = null;
 
 //dont know about this
-if (isDarkMode == null) {
-  darkState = browserDark;
-} else {
-  darkState = isDarkMode;
-}
+// if (isDarkMode == null) {
+//   darkState = browserDark;
+// } else {
+//   darkState = isDarkMode;
+// }
 
 //setting attribute depending on true or false
 if (darkState) {
