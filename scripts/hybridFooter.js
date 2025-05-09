@@ -18,7 +18,7 @@ book_online
 </section>
 
 <section class="footer-right">
-  <a href="favorites.html">
+  <a href="/favorites.html">
   <span class="material-symbols-outlined">
 bookmark
 </span>

@@ -77,4 +77,10 @@ textarea {
 
 .footer{
   background-color: light-dark(white, black);
+  box-shadow: 0 -1px 12px -8px  light-dark(rgba(89, 81, 35, 0.478), var(--light-color));
+}
+
+.root, .wrapper, .details__main, .details__info, .header__details{
+  background-color: light-dark(white, black);
+  color: light-dark(var(--color-regular), var(--light-color));
 }
