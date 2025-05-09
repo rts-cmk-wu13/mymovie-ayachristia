@@ -4,7 +4,7 @@ marginLeftWrapper.classList.add("indexMarginLeft");
 const headerMiddle = document.querySelector(".header__middle");
 
 headerMiddle.innerHTML = `
-<h1>MyMovies</h1>
+<h1 class=".header__middle-headline">MyMovies</h1>
 `;
 
 // main
